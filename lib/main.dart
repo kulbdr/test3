@@ -42,7 +42,7 @@ class _HangmanAppState extends State<HangmanApp> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Wrong guesses left: ${game.maxWrongGuesses - game.wrongGuesses}",
+              "Wrong guesses left: ${HangmanGame.maxWrongGuesses - game.wrongGuesses}",
               style: TextStyle(fontSize: 20),
             ),
             SizedBox(height: 20),
@@ -80,7 +80,9 @@ class _HangmanAppState extends State<HangmanApp> {
       runSpacing: 5,
       children: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map((letter) {
         return ElevatedButton(
-          onPressed: game.guessedLetters.contains(letter) ? null : () => onLetterGuessed(letter),
+          onPressed: game.guessedLetters.contains(letter)
+              ? null
+              : () => onLetterGuessed(letter),
           child: Text(letter),
         );
       }).toList(),

@@ -1,39 +1,42 @@
-import 'dart:math';
-
 class HangmanGame {
-  final List<String> words = ["flutter", "programming", "dart", "hangman", "widget"];
+  final List<String> words = ['HAPPY', 'FLUTTER', 'DARTS', 'PROGRAMMING', 'DEVELOPER'];
   late String wordToGuess;
-  late List<String> guessedLetters;
   int wrongGuesses = 0;
-  final int maxWrongGuesses = 6;
+  final List<String> guessedLetters = [];
+  static const int maxWrongGuesses = 6;
 
   HangmanGame() {
     startNewGame();
   }
 
   void startNewGame() {
-    wordToGuess = words[Random().nextInt(words.length)].toUpperCase();
-    guessedLetters = [];
+    wordToGuess = words[(words.length * (DateTime.now().millisecondsSinceEpoch % 1000)) % words.length];
     wrongGuesses = 0;
-  }
-
-  bool makeGuess(String letter) {
-    letter = letter.toUpperCase();
-    if (!guessedLetters.contains(letter)) {
-      guessedLetters.add(letter);
-      if (!wordToGuess.contains(letter)) {
-        wrongGuesses++;
-      }
-      return true;
-    }
-    return false;
+    guessedLetters.clear();
   }
 
   String getWordDisplay() {
-    return wordToGuess.split('').map((char) => guessedLetters.contains(char) ? char : '_').join(' ');
+    return wordToGuess
+        .split('')
+        .map((letter) => guessedLetters.contains(letter) ? letter : '_')
+        .join(' ');
   }
 
-  bool isGameOver() => wrongGuesses >= maxWrongGuesses || isGameWon();
+  void makeGuess(String letter) {
+    if (guessedLetters.contains(letter) || wrongGuesses >= maxWrongGuesses) return;
 
-  bool isGameWon() => wordToGuess.split('').every((char) => guessedLetters.contains(char));
+    guessedLetters.add(letter);
+
+    if (!wordToGuess.contains(letter)) {
+      wrongGuesses++;
+    }
+  }
+
+  bool isGameOver() {
+    return wrongGuesses >= maxWrongGuesses || isGameWon();
+  }
+
+  bool isGameWon() {
+    return wordToGuess.split('').every((letter) => guessedLetters.contains(letter));
+  }
 }
