@@ -1,5 +1,5 @@
 class HangmanGame {
-  final List<String> words = ['HAPPY', 'FLUTTER', 'DARTS', 'PROGRAMMING', 'DEVELOPER'];
+  final List<String> words = ['SAD', 'FLUTTER', 'VSCODE', 'PYTHON', 'PEOPLE'];
   late String wordToGuess;
   int wrongGuesses = 0;
   final List<String> guessedLetters = [];
